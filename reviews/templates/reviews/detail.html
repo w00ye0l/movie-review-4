@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content%}
+
+  <div>
+    <p>{{ review.user.username }}</p>
+    <p>{{ review.title }}</p>
+    <p>{{ review.content }}</p>
+    <p>{{ review.movie_name }}</p>
+    <p>{{ review.grade }}</p>
+  </div>
+
+  <a href="{% url 'reviews:index' %}">
+    목록
+  </a>
+
+{% endblock content%}
