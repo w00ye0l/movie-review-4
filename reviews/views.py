@@ -2,17 +2,19 @@ from wsgiref.util import request_uri
 from django.shortcuts import render, redirect
 from django.http import HttpResponseForbidden
 from .forms import ReviewForm, CommentForm
-from .models import Review,Comment
+from .models import Review, Comment
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
 
+@login_required
 def index(request):
     reviews = Review.objects.all()
     context = {"reviews": reviews}
 
     return render(request, "reviews/index.html", context)
+
 
 @login_required
 def create(request):
@@ -42,6 +44,7 @@ def detail(request, review_pk):
     }
     return render(request, "reviews/detail.html", context)
 
+
 @login_required
 def update(request, review_pk):
     review = Review.objects.get(pk=review_pk)
@@ -65,6 +68,7 @@ def update(request, review_pk):
     else:
         return HttpResponseForbidden()
 
+
 @login_required
 def delete(request, review_pk):
     review = Review.objects.get(pk=review_pk)
@@ -73,6 +77,7 @@ def delete(request, review_pk):
         return redirect("reviews:index")
     else:
         return HttpResponseForbidden()
+
 
 @login_required
 def comments_create(request, review_pk):
@@ -86,12 +91,13 @@ def comments_create(request, review_pk):
             comment.save()
         return redirect("reviews:detail", review.pk)
 
+
 @login_required
 def comments_delete(request, review_pk, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
 
     if request.user == comment.user:
         comment.delete()
-        return redirect("reviews:detail",review_pk)
+        return redirect("reviews:detail", review_pk)
     else:
         return HttpResponseForbidden()
