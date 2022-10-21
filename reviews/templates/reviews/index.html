@@ -2,7 +2,14 @@
 {% load django_bootstrap5 %}
 {% block content%}
 
-index
+
+{% for review in reviews %}
+  
+<div>
+  {{ review.title }}
+</div>
+
+{% endfor %}
 
 <a href="{% url 'reviews:create' %}"> create </a>
 
