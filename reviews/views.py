@@ -1,7 +1,9 @@
+from wsgiref.util import request_uri
 from django.shortcuts import render, redirect
 from django.http import HttpResponseForbidden
 from .forms import ReviewForm, CommentForm
-from .models import Review
+from .models import Review,Comment
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -12,7 +14,7 @@ def index(request):
 
     return render(request, "reviews/index.html", context)
 
-
+@login_required
 def create(request):
     if request.method == "POST":
         review_form = ReviewForm(request.POST)
@@ -40,7 +42,7 @@ def detail(request, review_pk):
     }
     return render(request, "reviews/detail.html", context)
 
-
+@login_required
 def update(request, review_pk):
     review = Review.objects.get(pk=review_pk)
     if review.user == request.user:
@@ -63,7 +65,7 @@ def update(request, review_pk):
     else:
         return HttpResponseForbidden()
 
-
+@login_required
 def delete(request, review_pk):
     review = Review.objects.get(pk=review_pk)
     if review.user == request.user:
@@ -72,7 +74,7 @@ def delete(request, review_pk):
     else:
         return HttpResponseForbidden()
 
-
+@login_required
 def comments_create(request, review_pk):
     review = Review.objects.get(pk=review_pk)
     if request.user.is_authenticated:
@@ -80,6 +82,16 @@ def comments_create(request, review_pk):
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
             comment.review = review
-            comment.user = review.user
+            comment.user = request.user
             comment.save()
         return redirect("reviews:detail", review.pk)
+
+@login_required
+def comments_delete(request, review_pk, comment_pk):
+    comment = Comment.objects.get(pk=comment_pk)
+
+    if request.user == comment.user:
+        comment.delete()
+        return redirect("reviews:detail",review_pk)
+    else:
+        return HttpResponseForbidden()
