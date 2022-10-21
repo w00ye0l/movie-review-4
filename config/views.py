@@ -1,4 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+
 
 def main(request):
-    pass
+    if request.user.is_authenticated:
+        return redirect("accounts:index")
+    else:
+        return redirect("accounts:login")
