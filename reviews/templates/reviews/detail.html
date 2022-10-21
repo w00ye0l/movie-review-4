@@ -14,5 +14,11 @@
   <a href="{% url 'reviews:index' %}">
     목록
   </a>
+  {% if review.user == request.user %}
+  <a href="{% url 'reviews:update' review.pk %}">
+    수정
+  </a>
+  {% endif %}
+
 
 {% endblock content%}
