@@ -60,3 +60,11 @@ def update(request,review_pk):
 
     else:
         return HttpResponseForbidden()
+
+def delete(request, review_pk):
+    review = Review.objects.get(pk=review_pk)
+    if review.user == request.user:
+        review.delete()
+        return redirect('reviews:index')
+    else:
+        return HttpResponseForbidden()
