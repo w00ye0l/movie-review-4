@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  
+<h1>Kinglaverse</h1>
+<p>댓글을 남기는 공간</p>
+
+<form action="">
+  {% csrf_token %}
+  <div>아이디</div>
+  <div>비밀번호</div>
+  <button>로그인</button>
+</form>
+
+<div>
+  <a href="{% url 'accounts:signup' %}">회원가입</a>
+</div>
+
+{% endblock content %}
+  
