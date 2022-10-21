@@ -2,15 +2,16 @@
 {% load django_bootstrap5 %}
 {% block content%}
 
+  {% for review in reviews %}
 
-{% for review in reviews %}
-  
-<div>
-  {{ review.title }}
-</div>
+    <div>
+      <a href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a>
+    </div>
 
-{% endfor %}
+  {% endfor %}
 
-<a href="{% url 'reviews:create' %}"> create </a>
+  <a href="{% url 'reviews:create' %}">
+    create
+  </a>
 
 {% endblock content%}
