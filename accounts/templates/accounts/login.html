@@ -1,20 +1,28 @@
 {% extends 'base.html' %}
+{% load django_bootstrap5 %}
 
 {% block content %}
-  
-<h1>Kinglaverse</h1>
-<p>댓글을 남기는 공간</p>
 
-<form action="">
-  {% csrf_token %}
-  <div>아이디</div>
-  <div>비밀번호</div>
-  <button>로그인</button>
-</form>
+  <h1>Kinglaverse</h1>
+  <p>댓글을 남기는 공간</p>
+  {% if request.user.is_authenticated %}
+    {{ request.user }}
+  {% endif %}
+  <form action="" method="POST">
+    {% csrf_token %}
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="floatingInput" name="username" placeholder="username">
+      <label for="floatingInput">username</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
+      <label for="floatingPassword">Password</label>
+    </div>
+    <input type="submit" value="로그인">
+  </form>
 
-<div>
-  <a href="{% url 'accounts:signup' %}">회원가입</a>
-</div>
+  <div>
+    <a href="{% url 'accounts:signup' %}">회원가입</a>
+  </div>
 
 {% endblock content %}
-  
