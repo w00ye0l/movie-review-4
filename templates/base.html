@@ -32,7 +32,7 @@
               <div class="rounded-circle" style="width:35px; height:35px; background-image:url('https://dummyimage.com/35x35/000/fff');"></div>
               {% endif %}
               <div class="ms-2 text-start">
-                <p class="m-0 fw-bold" style="font-size:15px;">이우열</p>
+                <p class="m-0 fw-bold" style="font-size:15px;">{{ request.user.name}}</p>
                 <p class="m-0 text-secondary" style="font-size:12px;">{{ request.user.username}}</p>
               </div>
             </a>
