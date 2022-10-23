@@ -1,4 +1,4 @@
-from wsgiref.util import request_uri
+from datetime import datetime
 from django.shortcuts import render, redirect
 from django.http import HttpResponseForbidden
 from .forms import ReviewForm, CommentForm
@@ -10,8 +10,10 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def index(request):
-    reviews = Review.objects.all()
-    context = {"reviews": reviews}
+    reviews = Review.objects.all().order_by("-pk")
+    context = {
+        "reviews": reviews,
+    }
 
     return render(request, "reviews/index.html", context)
 
@@ -29,7 +31,9 @@ def create(request):
     else:
         review_form = ReviewForm()
 
-    context = {"review_form": review_form}
+    context = {
+        "review_form": review_form,
+    }
 
     return render(request, "reviews/create.html", context)
 
@@ -61,7 +65,9 @@ def update(request, review_pk):
         else:
             review_form = ReviewForm(instance=review)
 
-        context = {"review_form": review_form}
+        context = {
+            "review_form": review_form,
+        }
 
         return render(request, "reviews/update.html", context)
 

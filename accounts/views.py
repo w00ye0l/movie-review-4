@@ -9,15 +9,16 @@ from django.contrib.auth import logout as auth_logout
 
 def signup(request):
     if request.method == "POST":
-        form = CustomUserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            auth_login(request, user)
             return redirect("reviews:index")
-
     else:
         form = CustomUserCreationForm()
-
-    context = {"form": form}
+    context = {
+        "form": form,
+    }
 
     return render(request, "accounts/signup.html", context)
 
@@ -31,7 +32,9 @@ def login(request):
                 return redirect(request.GET.get("next") or "reviews:index")
         else:
             form = AuthenticationForm()
-        context = {"form": form}
+        context = {
+            "form": form,
+        }
         return render(request, "accounts/login.html", context)
     else:
         return redirect("reviews:index")
