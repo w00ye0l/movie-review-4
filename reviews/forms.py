@@ -10,9 +10,9 @@ class ReviewForm(ModelForm):
         exclude = ("user",)
         labels = {
             "title": "리뷰 제목",
-            "content": "리뷰 내용",
-            "grade": "영화 평점",
             "movie_name": "영화 이름",
+            "grade": "영화 평점",
+            "content": "리뷰 내용",
         }
 
 

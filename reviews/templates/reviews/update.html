@@ -1,12 +1,17 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
+
 {% block content%}
+  <div class="mx-5">
+    <h3 class="my-3 fw-bold">리뷰 수정하기</h3>
 
-<form action="" method="POST">
-  {% csrf_token %}
-  {% bootstrap_form review_form %}
-  <input type="submit" value="리뷰 수정">
-</form>
-
+    <form action="" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form review_form %}
+      <div class="d-flex justify-content-end">
+        <input class="btn btn-primary fw-bold" type="submit" value="리뷰 수정">
+      </div>
+    </form>
+  </div>
 
 {% endblock content%}
