@@ -15,7 +15,7 @@
           <div class="d-flex justify-content-center align-items-center">
             <p class="m-0 mx-2 fw-light">댓글
               {{ review.comment_set.count }}</p>
-            <div class="rounded-circle bg-light" style="width:45px; height:45px; background-image:url({{ request.user.profile_image.url }}); background-repeat:no-repeat; background-position:center; background-size:contain;);"></div>
+            <div class="rounded-circle bg-light" style="width:45px; height:45px; background-image:url({{ review.user.profile_image.url }}); background-repeat:no-repeat; background-position:center; background-size:contain;);"></div>
             <p class="m-0 mx-2 fw-bold">{{ review.user.name }}</p>
           </div>
         </div>
